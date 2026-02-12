@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Murtaza Gandhi | AI-Augmented Computer Engineer</title>
+    
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js for skill visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Lucide Icons (via CDN for UI elements) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Chosen Palette: "Cyber-Slate & Amber" -->
+    <!-- 
+        Application Structure Plan:
+        1. Professional Persona Header: Immediate access to LinkedIn, GitHub, and Contact.
+        2. Intelligence Dashboard: Interactive Radar chart showing the balance of AI vs. traditional engineering.
+        3. Work Experience & Projects: Detailed cards for LiveKit, ComfyUI, and VoIP.
+        4. Infrastructure Visualizer: A specialized layout showcasing the Home Lab (Tailscale, VirtualBox, Soundwire).
+        5. ATS-Compliant Export Mode: A hidden-by-default view that strips complex UI for a pure, linear resume structure.
+    -->
+
+    <!-- Visualization & Content Choices:
+        - Radar Chart: Compares AI Workflow expertise with Systems Admin.
+        - Progress Bars: Highlights specific tool proficiencies (Docker, HestiaCP).
+        - HTML/CSS Diagram: Visualizes the complex Tailnet and peripheral relay (Soundwire/Droidcam).
+        - Confirmation: NO SVG graphics used. NO Mermaid JS used. All visual structures are HTML/CSS or Canvas.
+    -->
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            height: 350px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f8fafc; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        .infrastructure-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .infrastructure-card:hover {
+            transform: translateY(-4px);
+            border-color: #f59e0b;
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            #ats-resume-view { display: block !important; }
+            #interactive-view { display: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
+
+    <!-- NAVIGATION OVERLAY (Fixed) -->
+    <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-slate-200 z-50 no-print">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-amber-500 rounded flex items-center justify-center text-white font-bold">M</div>
+                <span class="font-bold tracking-tight text-slate-800">MURTAZA GANDHI</span>
+            </div>
+            <div class="hidden md:flex gap-6 text-sm font-medium text-slate-600">
+                <button onclick="scrollToSection('profile')" class="hover:text-amber-600 transition">Profile</button>
+                <button onclick="scrollToSection('lab')" class="hover:text-amber-600 transition">Home Lab</button>
+                <button onclick="scrollToSection('projects')" class="hover:text-amber-600 transition">AI Projects</button>
+                <button onclick="toggleATSView()" class="bg-slate-900 text-white px-4 py-1.5 rounded-full hover:bg-amber-600 transition flex items-center gap-2">
+                    <i data-lucide="file-text" class="w-4 h-4"></i> ATS View
+                </button>
+            </div>
+            <div class="md:hidden">
+                <button onclick="toggleATSView()" class="p-2 text-slate-600"><i data-lucide="menu"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- INTERACTIVE VIEW -->
+    <div id="interactive-view" class="pt-24 pb-12 animate-in fade-in duration-700">
+        
+        <!-- HERO SECTION -->
+        <section id="profile" class="max-w-7xl mx-auto px-4 mb-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <div class="lg:col-span-7">
+                    <span class="inline-block px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full mb-4 uppercase tracking-widest">Available for Remote Opportunities</span>
+                    <h1 class="text-5xl md:text-6xl font-extrabold text-slate-900 mb-6 leading-tight">
+                        AI-Augmented <span class="text-amber-500">Systems Engineer</span>
+                    </h1>
+                    <p class="text-lg text-slate-600 mb-8 max-w-2xl leading-relaxed">
+                        Computer Engineer based in Ahmedabad, redefining delivery through the marriage of <strong>Hands-on Systems Admin</strong> and <strong>Generative AI Workflows</strong>. I build high-performance infrastructure on low-cost hardware, utilizing mesh networking and AI-assisted automation.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <a href="https://www.linkedin.com/in/murtaza-gandhi-b7b18818a/" target="_blank" class="flex items-center gap-2 bg-white border border-slate-200 px-5 py-2.5 rounded-xl hover:shadow-md transition">
+                            <i data-lucide="linkedin" class="w-5 h-5 text-blue-600"></i> LinkedIn
+                        </a>
+                        <a href="https://github.com/migandhi" target="_blank" class="flex items-center gap-2 bg-white border border-slate-200 px-5 py-2.5 rounded-xl hover:shadow-md transition">
+                            <i data-lucide="github" class="w-5 h-5 text-slate-800"></i> GitHub
+                        </a>
+                        <a href="tel:+917567365118" class="flex items-center gap-2 bg-amber-500 text-white px-5 py-2.5 rounded-xl hover:bg-amber-600 shadow-lg shadow-amber-200 transition">
+                            <i data-lucide="phone" class="w-5 h-5"></i> Contact Me
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 bg-white p-6 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <i data-lucide="zap" class="text-amber-500"></i> Skill Synthesis
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="skillRadar"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE LAB: INFRASTRUCTURE VISUALIZER -->
+        <section id="lab" class="max-w-7xl mx-auto px-4 mb-20">
+            <div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden">
+                <div class="relative z-10">
+                    <h2 class="text-3xl font-bold mb-2">The "Home Cloud" Ecosystem</h2>
+                    <p class="text-slate-400 mb-10 max-w-xl">I maximize equipment by virtualizing servers and networking peripherals over a secure Tailnet.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Node 1 -->
+                        <div class="infrastructure-card bg-slate-800/50 border border-slate-700 p-6 rounded-2xl">
+                            <div class="w-10 h-10 bg-amber-500/20 text-amber-500 rounded-lg flex items-center justify-center mb-4">
+                                <i data-lucide="server"></i>
+                            </div>
+                            <h4 class="font-bold mb-2">Host & Virtualization</h4>
+                            <p class="text-sm text-slate-400">Windows 10/7 Host running Ubuntu Server via VirtualBox. Configured for high-availability local services.</p>
+                        </div>
+                        <!-- Node 2 -->
+                        <div class="infrastructure-card bg-slate-800/50 border border-slate-700 p-6 rounded-2xl">
+                            <div class="w-10 h-10 bg-blue-500/20 text-blue-500 rounded-lg flex items-center justify-center mb-4">
+                                <i data-lucide="network"></i>
+                            </div>
+                            <h4 class="font-bold mb-2">Tailscale Mesh</h4>
+                            <p class="text-sm text-slate-400">Custom 'Tailnet' for secure remote access. Samba integration for file sharing & Taildrop for zero-config transfers.</p>
+                        </div>
+                        <!-- Node 3 -->
+                        <div class="infrastructure-card bg-slate-800/50 border border-slate-700 p-6 rounded-2xl">
+                            <div class="w-10 h-10 bg-purple-500/20 text-purple-500 rounded-lg flex items-center justify-center mb-4">
+                                <i data-lucide="smartphone"></i>
+                            </div>
+                            <h4 class="font-bold mb-2">Peripheral Bridge</h4>
+                            <p class="text-sm text-slate-400">Soundwire for audio relay & Droidcam for webcam/mic integration using Android devices on Windows 10.</p>
+                        </div>
+                        <!-- Node 4 -->
+                        <div class="infrastructure-card bg-slate-800/50 border border-slate-700 p-6 rounded-2xl">
+                            <div class="w-10 h-10 bg-green-500/20 text-green-500 rounded-lg flex items-center justify-center mb-4">
+                                <i data-lucide="container"></i>
+                            </div>
+                            <h4 class="font-bold mb-2">Cloud Edge</h4>
+                            <p class="text-sm text-slate-400">Contabo VPS, Netlify, and Vercel. Administration of HestiaCP, Apache, and Dockerized images.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS & EXPERIENCE -->
+        <section id="projects" class="max-w-7xl mx-auto px-4 mb-20">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+                <div>
+                    <h2 class="text-3xl font-bold text-slate-900">Featured AI Workflows</h2>
+                    <p class="text-slate-600">Delivering complex solutions through LLM-assisted engineering.</p>
+                </div>
+                <div class="flex gap-2">
+                    <span class="px-4 py-2 bg-slate-200 text-slate-700 rounded-full text-xs font-bold uppercase tracking-widest">Updated Feb 2026</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="group bg-white border border-slate-200 rounded-3xl p-8 hover:shadow-2xl transition-all duration-500">
+                    <div class="text-amber-500 mb-6 group-hover:scale-110 transition-transform"><i data-lucide="brain-circuit" class="w-10 h-10"></i></div>
+                    <h3 class="text-xl font-bold mb-3">ComfyUI Pipelines</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">
+                        Mastering local and RunningHub AI platforms. Expertise in ComfyUI workflows, ControlNet, IPAdapter, and SDXL models for high-fidelity image generation.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded">SDXL</span>
+                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded">CONTROLNET</span>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="group bg-white border border-slate-200 rounded-3xl p-8 hover:shadow-2xl transition-all duration-500">
+                    <div class="text-blue-500 mb-6 group-hover:scale-110 transition-transform"><i data-lucide="video" class="w-10 h-10"></i></div>
+                    <h3 class="text-xl font-bold mb-3">LiveKit AI Assistant</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">
+                        Engineered a conference system using LiveKit, successfully integrating a real-time Gemini AI assistant to manage conference queries and logistics.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded">LIVEKIT</span>
+                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded">GEMINI API</span>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="group bg-white border border-slate-200 rounded-3xl p-8 hover:shadow-2xl transition-all duration-500">
+                    <div class="text-red-500 mb-6 group-hover:scale-110 transition-transform"><i data-lucide="phone-call" class="w-10 h-10"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Asterisk VoIP Ops</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">
+                        Configured and managed VOIP servers using Asterisk on Ubuntu VPS, optimized for low-latency communication in resource-constrained environments.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded">ASTERISK</span>
+                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded">UBUNTU</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="max-w-7xl mx-auto px-4 pt-12 border-t border-slate-200">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-slate-400 text-xs">
+                    &copy; 2026 Murtaza Gandhi. Built using Gemini 2.5 Flash.
+                </div>
+                <div class="flex gap-6">
+                    <a href="mailto:mgandhi@example.com" class="text-slate-400 hover:text-amber-500 transition text-sm">Email</a>
+                    <a href="https://github.com/migandhi" class="text-slate-400 hover:text-amber-500 transition text-sm">GitHub</a>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ATS RESUME VIEW (Hidden by default, semantic for ATS/Print) -->
+    <div id="ats-resume-view" class="hidden bg-white min-h-screen py-12 px-8 max-w-[8.5in] mx-auto text-slate-900 font-serif leading-tight">
+        <div class="text-center border-b-2 border-slate-800 pb-4 mb-6">
+            <h1 class="text-4xl font-bold uppercase tracking-tighter">Murtaza Gandhi</h1>
+            <p class="text-sm mt-2">Ahmedabad, Gujarat, India | +91 75673 65118</p>
+            <p class="text-sm text-blue-700 underline">linkedin.com/in/murtaza-gandhi-b7b18818a | github.com/migandhi</p>
+        </div>
+
+        <section class="mb-6">
+            <h2 class="text-lg font-bold uppercase border-b border-slate-300 mb-2">Professional Summary</h2>
+            <p class="text-sm text-justify">
+                Detail-oriented Computer Engineer specializing in AI-augmented infrastructure development and systems administration. Expert at architecting cost-effective solutions using Vercel, Netlify, and low-cost VPS platforms (Contabo). Proven track record in managing complex home-lab environments, virtualized servers (Ubuntu/VirtualBox), and secure mesh networks (Tailscale). Currently leveraging Generative AI (Gemini, SDXL, ComfyUI) to deliver high-performance enterprise solutions.
+            </p>
+        </section>
+
+        <section class="mb-6">
+            <h2 class="text-lg font-bold uppercase border-b border-slate-300 mb-2">Technical Core Competencies</h2>
+            <div class="grid grid-cols-2 text-sm gap-x-8 gap-y-1">
+                <p><strong>AI Frameworks:</strong> ComfyUI, SDXL, ControlNet, IPAdapter, Gemini API</p>
+                <p><strong>DevOps:</strong> Docker, Netlify, Vercel, Hestia CP, Ubuntu Server</p>
+                <p><strong>Networking:</strong> Tailscale Mesh (Tailnet), Samba, Asterisk VOIP</p>
+                <p><strong>System Admin:</strong> Apache, Windows 10/7, VirtualBox, Linux Administration</p>
+                <p><strong>Hardware Ops:</strong> Peripheral Relay (Soundwire, Droidcam), Android Testing</p>
+                <p><strong>Automation:</strong> LLM-Assisted Coding (Gemini/ChatGPT), Shell Scripting</p>
+            </div>
+        </section>
+
+        <section class="mb-6">
+            <h2 class="text-lg font-bold uppercase border-b border-slate-300 mb-2">Selected Professional Experience & Projects</h2>
+            
+            <div class="mb-4">
+                <div class="flex justify-between items-baseline">
+                    <h3 class="font-bold">AI Solutions Architect & Systems Engineer</h3>
+                    <span class="text-sm italic">Feb 2024 – Present</span>
+                </div>
+                <ul class="list-disc ml-5 text-sm mt-1">
+                    <li>Integrated real-time AI assistants into video conferencing workflows using LiveKit and Google Gemini API.</li>
+                    <li>Developed sophisticated ComfyUI workflows for local image generation, optimizing SDXL inference on consumer hardware.</li>
+                    <li>Administrate diverse server environments including Contabo VPS running Hestia Control Panel and Apache.</li>
+                    <li>Architected a multi-node "Home Lab" using Tailscale (Tailnet) to link legacy Windows 7 hosts with modern Ubuntu VMs.</li>
+                </ul>
+            </div>
+
+            <div class="mb-4">
+                <div class="flex justify-between items-baseline">
+                    <h3 class="font-bold">Project Lead - International Operations (Capita)</h3>
+                    <span class="text-sm italic">Onsite: United Kingdom</span>
+                </div>
+                <p class="text-sm mt-1 italic">Executed technical projects onsite in the UK for Capita, ensuring compliance with international engineering standards.</p>
+            </div>
+
+            <div class="mb-4">
+                <div class="flex justify-between items-baseline">
+                    <h3 class="font-bold">Infrastructure Optimization Specialist</h3>
+                    <span class="text-sm italic">Ahmedabad, India</span>
+                </div>
+                <ul class="list-disc ml-5 text-sm mt-1">
+                    <li>Engineered a peripheral relay system using Soundwire and Droidcam to bypass hardware limitations on local Windows nodes.</li>
+                    <li>Managed Samba-based file sharing ecosystems over mesh networks for secure cross-device data synchronization.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="mb-6">
+            <h2 class="text-lg font-bold uppercase border-b border-slate-300 mb-2">Education</h2>
+            <div class="flex justify-between items-baseline text-sm">
+                <p><strong>Bachelor of Engineering in Computer Engineering</strong></p>
+                <p>Ahmedabad, India</p>
+            </div>
+        </section>
+
+        <div class="text-center text-[10px] text-slate-400 mt-12 border-t pt-4">
+            Resume generated on February 12, 2026. ATS-Compliant Version.
+            <button onclick="toggleATSView()" class="no-print ml-2 text-blue-600 underline">Return to Interactive Mode</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialization
+        window.onload = () => {
+            lucide.createIcons();
+            renderCharts();
+        };
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleATSView() {
+            const interactive = document.getElementById('interactive-view');
+            const ats = document.getElementById('ats-resume-view');
+            const nav = document.querySelector('nav');
+
+            if (ats.classList.contains('hidden')) {
+                ats.classList.remove('hidden');
+                interactive.classList.add('hidden');
+                nav.classList.add('no-print');
+                window.scrollTo(0, 0);
+            } else {
+                ats.classList.add('hidden');
+                interactive.classList.remove('hidden');
+                nav.classList.remove('no-print');
+            }
+        }
+
+        function renderCharts() {
+            const ctx = document.getElementById('skillRadar').getContext('2d');
+            
+            // Skill Assessment based on Research & Input
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        'AI Workflows (ComfyUI)', 
+                        'Server Admin (Linux)', 
+                        'Networking (Tailnet)', 
+                        'Cloud (Netlify/VPS)', 
+                        'Hardware Hacking',
+                        'VOIP (Asterisk)'
+                    ],
+                    datasets: [{
+                        label: 'Proficiency',
+                        data: [95, 88, 92, 85, 90, 80],
+                        fill: true,
+                        backgroundColor: 'rgba(245, 158, 11, 0.2)',
+                        borderColor: '#f59e0b',
+                        pointBackgroundColor: '#f59e0b',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#f59e0b'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: '#e2e8f0' },
+                            grid: { color: '#e2e8f0' },
+                            pointLabels: {
+                                font: { size: 10, weight: '600' },
+                                color: '#475569'
+                            },
+                            ticks: { display: false, stepSize: 20 },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
